@@ -1,0 +1,48 @@
+
+#include "pch.h"
+#include <iostream>
+using namespace std;
+uint16_t N;
+uint16_t queen[100];  //queen[i] 第i行皇后所代表的位置
+
+void Nqueen(uint16_t n);
+int main()
+{
+	cout << "input queen number :";
+	cin >> N;
+	Nqueen(0);
+	cout << "Hello World!\n";
+}
+
+//在0~n-1行都已经摆好的情况下，摆放第n行皇后位置
+void Nqueen(uint16_t n)
+{
+	uint16_t i;
+	uint16_t j;
+	if (n == N)  // 0~N-1行的皇后都已经摆放好的情况下 ，输出对应的位置
+	{
+		for (i = 0; i < N; i++)
+		{
+			cout << i + 1 << "  " << queen[i]+1 << "  ,  ";
+		}
+		cout << endl;
+		return;
+	}
+
+	//摆放第n行皇后位置i
+	for (i = 0; i < N; i++) //从第0~N-1列查找满足条件的皇后的位置
+	{
+		for ( j = 0; j < n; j++) //遍历前面摆好的n-1行位置是否和第n行冲突
+		{
+			if (queen[j]==i ||  abs(queen[j]-i)==abs(n-j))  //j行的位置和第n行位置不能一样，而且两个位置的行差和列差的绝对值不能一样
+			{
+				break;
+			}			
+		}
+		if (j == n)
+		{
+			queen[n] = i;
+			Nqueen(n + 1);
+		}	
+	}
+}
